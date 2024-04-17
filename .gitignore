@@ -1,3 +1,10 @@
+*replit*
+*pyc
+.config
+venv
+lmvenv
+main-notokenlimit.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
