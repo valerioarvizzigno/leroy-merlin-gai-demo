@@ -121,85 +121,6 @@ def search_products(query_text):
 
     return body, url
 
-# Search ElasticSearch index and return body and URL for crawled docs
-def search_docs(query_text):
-    
-
-    # Elasticsearch query (BM25) and kNN configuration for hybrid search
-    query = {
-        "bool": {
-            "must": [{
-                "match": {
-                    "title": {
-                        "query": query_text,
-                        "boost": 1
-                    }
-                }
-            }],
-            "filter": [{
-                "exists": {
-                    "field": "title-vector"
-                }
-            }]
-        }
-    }
-
-    knn = {
-        "field": "title-vector",
-        "k": 1,
-        "num_candidates": 20,
-        "query_vector_builder": {
-            "text_embedding": {
-                "model_id": "sentence-transformers__all-distilroberta-v1",
-                "model_text": query_text
-            }
-        },
-        "boost": 24
-    }
-
-    fields = ["title", "body_content", "url"]
-    index = 'search-homecraft-ikea'
-    resp = es.search(index=index,
-                     query=query,
-                     knn=knn,
-                     fields=fields,
-                     size=1,
-                     source=False)
-
-    body = resp['hits']['hits'][0]['fields']['body_content'][0]
-    url = resp['hits']['hits'][0]['fields']['url'][0]
-
-    return body, url
-
-# Search ElasticSearch index for user's order history
-def search_orders(user):
-
-    # Use only text-search
-    query = {
-        "bool": {
-            "must": [{
-                "match": {
-                    "user_id": {
-                        "query": user,
-                        "boost": 1
-                    }
-                }
-            }]
-        }
-    }
-
-    fields = ["id", "order_id", "user_id", "product_id" "status", "created_at", "shipped_at", "delivered_at", "returned_at", "sale_price"]
-    index = 'bigquery-thelook-order-items'
-    resp = es.search(index=index,
-                     query=query,
-                     fields=fields,
-                     size=10,
-                     source=False)
-
-    order_items_list = resp['hits']['hits']
-
-    return order_items_list
-
 def truncate_text(text, max_tokens):
     tokens = text.split()
     if len(tokens) <= max_tokens:
@@ -207,7 +128,7 @@ def truncate_text(text, max_tokens):
 
     return ' '.join(tokens[:max_tokens])
 
-# Generate a response from Gemini based on the given prompt
+# Generate a response from Gemini based on the given prompt - NOT USED
 def vertexAI(chat: ChatSession, prompt: str) -> str:
     response = chat.send_message(prompt)
     return response.text
@@ -236,9 +157,9 @@ st.set_page_config(layout="wide")
 with st.container():
     c1, c2, c3 = st.columns([1,1,1])
     with c1:
-        pass
-    with c2:
         st.image("https://upload.wikimedia.org/wikipedia/commons/d/d4/Leroy_Merlin.svg", caption=None)
+    with c2:
+        pass
     with c3:
         pass
     
@@ -271,8 +192,8 @@ if submit_button:
     es = es_connect(cid, cu, cp)
     #topicCheck = generateResponse(f"What's the product the user is talking about in the question? Answer in french. Question: {user_query}")
     resp_products, url_products = search_products(user_query if queryForElastic == '' else queryForElastic)
-    resp_docs, url_docs = search_docs(user_query if queryForElastic == '' else queryForElastic)
-    resp_order_items = search_orders(1) # 1 is the hardcoded userid, to simplify this scenario. You should take user_id by user session
+    #resp_docs, url_docs = search_docs(user_query if queryForElastic == '' else queryForElastic)
+    #resp_order_items = search_orders(1) # 1 is the hardcoded userid, to simplify this scenario. You should take user_id by user session
     #prompt = f"You are an e-commerce AI assistant. Answer this question: {query} using this context: \n{resp_products} \n {resp_docs} \n {resp_order_items}."
     #prompt = f"You are an e-commerce AI assistant. Answer this question: {query}.\n If product information is requested use the information provided in this JSON: {resp_products} listing the identified products in bullet points with this format: Product name, product key features, price, web url. \n For other questions use the documentation provided in these docs: {resp_docs} and your own knowledge. \n If the question contains requests for user past orders consider the following order list: {resp_order_items}"
     ##prompt = [f"You are an e-commerce AI assistant.", f"You answer question around product catalog, general company information and user past orders", f"Answer this question: {query}.", f"Context: Picture content = {answerVision}; Product catalog = {resp_products}; General information = {resp_docs}; Past orders = {resp_order_items} "]
