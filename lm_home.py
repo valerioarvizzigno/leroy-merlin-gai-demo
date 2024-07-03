@@ -157,13 +157,13 @@ st.set_page_config(layout="wide")
 with st.container():
     c1, c2, c3 = st.columns([1,1,1])
     with c1:
-        st.image("https://upload.wikimedia.org/wikipedia/commons/d/d4/Leroy_Merlin.svg", caption=None)
+        st.image("./resources/logo.png", caption=None, width=350)
     with c2:
         pass
     with c3:
         pass
     
-    st.title("Leroy Merlin e-commerce search bar")
+    st.title("Your e-commerce search bar")
 
 with st.container():
     left_column, right_column = st.columns([2,1])
