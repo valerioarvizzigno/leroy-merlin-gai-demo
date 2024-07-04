@@ -17,3 +17,9 @@
 ### Multi Modal
 
 Avez-vous quelque chose de similaire dans votre catalogue de produits ? Spécifiez URL et prix pour chaque produit
+
+
+### ENGLISH VERSION
+
+    - I would like to renovate my bathroom. Could you please list all the components I need for doing this?
+    - Could you list some bathroom fittings available in your product catalog?
