@@ -42,7 +42,7 @@ generation_config = GenerationConfig(
 
 vertexai.init(project=projid, location="us-central1")
 
-model = GenerativeModel("gemini-1.5-pro-001")
+model = GenerativeModel("gemini-pro")
 visionModel = GenerativeModel("gemini-1.0-pro-vision-001")
 #Gemini can hold chat history in the chat variable. Pass this variable every time along with the prompt one. 
 #chat = model.start_chat()
