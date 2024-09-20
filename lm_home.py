@@ -4,7 +4,7 @@ from io import StringIO
 import streamlit as st
 from elasticsearch import Elasticsearch
 import vertexai
-from vertexai.preview.generative_models import GenerativeModel, ChatSession, GenerationConfig, Image, Part
+from vertexai.generative_models import GenerativeModel, ChatSession, GenerationConfig, Image, Part
 
 # This code shows VertexAI GenAI integration with Elastic Vector Search features
 # to connect publicly trained LLMs with private data
@@ -42,7 +42,7 @@ generation_config = GenerationConfig(
 
 vertexai.init(project=projid, location="us-central1")
 
-model = GenerativeModel("gemini-pro")
+model = GenerativeModel("gemini-1.5-pro-001")
 visionModel = GenerativeModel("gemini-1.0-pro-vision-001")
 #Gemini can hold chat history in the chat variable. Pass this variable every time along with the prompt one. 
 #chat = model.start_chat()

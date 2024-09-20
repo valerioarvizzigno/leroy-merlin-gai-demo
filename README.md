@@ -23,5 +23,7 @@ Avez-vous quelque chose de similaire dans votre catalogue de produits ? Spécifi
 
     - I would like to renovate my bathroom. Could you please list all the components I need for doing this?
     - Could you list some bathroom fittings available in your product catalog? List prices and description
+    - Please provide me with a list of your best showerheads, LED wall lights, and toilets from your catalog. Please include the price, size, and material for each item.
+    - Do you have any IP65 lamps do be used in my shower? Please provide costs and product descriptions, and URLs
 
     
