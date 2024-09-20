@@ -13,6 +13,7 @@ from vertexai.generative_models import GenerativeModel, ChatSession, GenerationC
 # Code is presented for demo purposes but should not be used in production
 # You may encounter exceptions which are not handled in the code
 
+st.set_page_config(page_title="English version", layout="wide") 
 
 # Required Environment Variables
 # gcp_project_id - Google Cloud project ID
@@ -152,7 +153,6 @@ def generateVisionResponse(prompt, image):
 
 
 #image = Image.open('homecraft_logo.jpg')
-st.set_page_config(layout="wide") 
 
 with st.container():
     c1, c2, c3 = st.columns([1,1,1])
@@ -183,7 +183,7 @@ if submit_button:
     queryForElastic = ''
     answerVision = ''
     if uploaded_file is not None:
-        visionQuery = 'What is the product in the picture? Answer in french and describe it with max 20 words'
+        visionQuery = 'What is the product in the picture? Describe it with max 20 words'
         answerVision = generateVisionResponse(visionQuery,uploaded_file)
         #To Elastic, for semantic search, we send both the question and the first answer from the vision model
         queryForElastic = answerVision 
@@ -200,8 +200,8 @@ if submit_button:
     #prompt = f"You are an e-commerce customer AI assistant. Answer this question: {query}.\n with your own knowledge and using the information provided in the context. Context: JSON product catalog: {resp_products} \n, these docs: \n {resp_docs} \n and this user order history: \n {resp_order_items}"
     #answer = vertexAI(chat, prompt)
     #prompt = [f"You are an e-commerce AI assistant.", f"You answer question around product catalog, general company information and user past orders", f"You answer questions in french language", f"Question: {query};", f"Context: Picture content = {answerVision}; Product catalog = {resp_products};" ]
-    #prompt = [f"You are an e-commerce AI assistant. You answer question around product catalog, general company information and user past orders. You answer questions in french language and using this context: Picture content = {answerVision}, Product catalog = {resp_products}." f"Question: {query}."]
-    prompt = [f"Vous êtes un assistant IA e-commerce. Vous répondez aux questions concernant le catalogue de produits, les informations générales sur l'entreprise et les commandes passées des utilisateurs. Vous répondez aux questions en français et en utilisant ce contexte : Contenu de l'image = {answerVision}, Catalogue de produits = {resp_products}." f"Demande: {user_query}"]
+    prompt = [f"You are an e-commerce AI assistant. You answer question around product catalog, general company information and user past orders. You answer questions in english and using this context: Picture content = {answerVision}, Product catalog = {resp_products}." f"Question: {user_query}."]
+    #prompt = [f"Vous êtes un assistant IA e-commerce. Vous répondez aux questions concernant le catalogue de produits, les informations générales sur l'entreprise et les commandes passées des utilisateurs. Vous répondez aux questions en français et en utilisant ce contexte : Contenu de l'image = {answerVision}, Catalogue de produits = {resp_products}." f"Demande: {user_query}"]
     answer = generateResponse(prompt)
 
     if answer.strip() == '':
