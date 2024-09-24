@@ -16,7 +16,8 @@
 
 ### Multi Modal
 
-Avez-vous quelque chose de similaire dans votre catalogue de produits ? Spécifiez URL et prix pour chaque produit
+    - Avez-vous quelque chose de similaire dans votre catalogue de produits ? Spécifiez URL et prix pour chaque produit
+
 
 
 ### ENGLISH VERSION
@@ -24,5 +25,10 @@ Avez-vous quelque chose de similaire dans votre catalogue de produits ? Spécifi
     - I would like to renovate my bathroom. Could you please list all the components I need for doing this?
     - Could you list some bathroom fittings available in your product catalog? List prices and description
     - Do you have any IP65 lamps do be used in my shower? Please provide costs and product descriptions, and URLs
+    - How many garden tables do you have? Please describe their dimension and price. Also provide each item URL
+
+### Multi Modal
+
+    - Do you have something similar in your product catalog? Specify URL and price for each product  
 
     
