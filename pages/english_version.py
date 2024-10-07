@@ -15,6 +15,44 @@ from vertexai.generative_models import GenerativeModel, ChatSession, GenerationC
 
 st.set_page_config(page_title="English version", layout="wide") 
 
+with st.sidebar:
+    st.text ("Gemini configuration")
+    manual_temperature = st.slider(
+        "Temperature", 0.0, 2.0, 0.4, 0.1
+    )
+    manual_max_output_tokens = st.slider(
+        "Output token limit", 1, 8192, 2048
+    )
+    manual_topK = st.slider(
+        "TopK", 1, 40, 40
+    )
+    manual_topP = st.slider(
+        "TopP", 0.00, 1.00, 0.80
+    )
+
+with st.container():
+    c1, c2, c3 = st.columns([1,1,1])
+    with c1:
+        st.image("./resources/logo.png", caption=None, width=350)
+    with c2:
+        pass
+    with c3:
+        pass
+    
+    st.title("Your e-commerce search bar")
+
+with st.container():
+    left_column, right_column = st.columns([2,1])
+
+# Main chat form
+with left_column:
+    with st.form("chat_form"):
+        user_query = st.text_input("You: ")
+        submit_button = st.form_submit_button("Submit")
+#image load component
+with right_column:
+    uploaded_file = st.file_uploader("Add an image to your prompt (.png or .jpg)", ['png','jpg'])
+
 # Required Environment Variables
 # gcp_project_id - Google Cloud project ID
 # cloud_id - Elastic Cloud Deployment ID
@@ -27,10 +65,10 @@ cp = os.environ['cloud_pass']
 cu = os.environ['cloud_user']
 
 generation_config = GenerationConfig(
-    temperature=0.4, # 0 - 1. The higher the temp the more creative and less on point answers become
-    max_output_tokens=2048, #modify this number (1 - 1024) for short/longer answers
-    top_p=0.8,
-    top_k=40,
+    temperature=manual_temperature, # 0 - 2. The higher the temp the more creative and less on point answers become
+    max_output_tokens=manual_max_output_tokens, #modify this number (1 - 8192) for short/longer answers
+    top_p=manual_topP,
+    top_k=manual_topK,
     candidate_count=1,
 )
 
@@ -151,31 +189,6 @@ def generateVisionResponse(prompt, image):
     )
     return response.text
 
-
-#image = Image.open('homecraft_logo.jpg')
-
-with st.container():
-    c1, c2, c3 = st.columns([1,1,1])
-    with c1:
-        st.image("./resources/logo.png", caption=None, width=350)
-    with c2:
-        pass
-    with c3:
-        pass
-    
-    st.title("Your e-commerce search bar")
-
-with st.container():
-    left_column, right_column = st.columns([2,1])
-
-# Main chat form
-with left_column:
-    with st.form("chat_form"):
-        user_query = st.text_input("You: ")
-        submit_button = st.form_submit_button("Submit")
-#image load component
-with right_column:
-    uploaded_file = st.file_uploader("Add an image to your prompt (.png or .jpg)", ['png','jpg'])
 
 # Generate and display response on form submission
 negResponse = "I'm unable to answer the question based on the information I have from Leroy Merlin dataset."
