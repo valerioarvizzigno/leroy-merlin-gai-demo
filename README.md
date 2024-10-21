@@ -29,6 +29,8 @@
 
 ### Multi Modal
 
+Attach a product picture (e.g. .jpg you can find in samples/images folder of this repo) and ask questions like below:
+
     - Do you have something similar in your product catalog? Specify URL and price for each product  
 
     
