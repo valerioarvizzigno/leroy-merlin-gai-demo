@@ -1,5 +1,7 @@
 # leroy-merlin-gai-demo
 
+*** UPDATED TO USE GEMINI 2.0 FLASH ***
+
 ### Text-only simple questions
 
     - Je veux rénover ma salle de bain. Pourriez-vous s'il vous plaît énumérer tous les composants nécessaires pour le faire ?
